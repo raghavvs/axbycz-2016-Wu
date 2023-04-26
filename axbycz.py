@@ -1,5 +1,5 @@
 import numpy as np
-import GetF, Getc, GetJ, Getp, vlogR, rotationMatrix
+import GetF, Getc, GetJ, Getp, vlogR, rotationMatrix, loadMatrices, findInitialXYZ
 
 def AXBYCZ(gA, gB, gC, RX_init, RY_init, RZ_init):
     N = gA.shape[2]
@@ -54,13 +54,24 @@ def AXBYCZ(gA, gB, gC, RX_init, RY_init, RZ_init):
 
     return gX, gY, gZ, errR, errt, iter
 
-# Define GetF, Getc, GetJ, Getp, and vlogR functions here
-
-# ...
-
 if __name__ == '__main__':
     # Load your gA, gB, gC, RX_init, RY_init, and RZ_init matrices here
-    # ...
+    A1_files = ["data/charuco_10x14/r1_tf.txt"]
+    B1_files = ["data/charuco_10x14/c2b_tf.txt"]
+    C1_files = ["data/charuco_10x14/r2_tf.txt"]
+    A2_files = ["data/charuco_10x14/r1_tf.txt"]
+    B2_files = ["data/charuco_10x14/c2b_tf.txt"]
+    C2_files = ["data/charuco_10x14/r2_tf.txt"]
+
+    gA = loadMatrices(A1_files)
+    gB = loadMatrices(B1_files)
+    gC = loadMatrices(C1_files)
+
+    RX_0 = gA[:3,:3,:]
+    RY_0 = gB[:3,:3,:]
+    RZ_0 = gC[:3,:3,:]
+
+    RX_init, RY_init, RZ_init = findInitialXYZ(RX_0, RY_0, RZ_0)
 
     gX, gY, gZ, errR, errt, iter = AXBYCZ(gA, gB, gC, RX_init, RY_init, RZ_init)
     
