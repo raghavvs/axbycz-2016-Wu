@@ -1,5 +1,5 @@
 import numpy as np
-import skew
+from utils import skew
 
 def GetF(RA_noise, RB_noise, RC_noise, RX_init, RY_init, RZ_init):
     # refer to eq. (29)

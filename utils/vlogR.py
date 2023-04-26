@@ -1,6 +1,6 @@
 import numpy as np
 import warnings
-import skew
+from utils import skew
 
 def vlogR(R):
     DELTA = 1e-12

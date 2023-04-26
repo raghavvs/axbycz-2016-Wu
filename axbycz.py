@@ -1,5 +1,12 @@
 import numpy as np
-import GetF, Getc, GetJ, Getp, vlogR, rotationMatrix, loadMatrices, findInitialXYZ
+from utils.loadMatrices import loadMatrices
+from utils.findInitialXYZ import findInitialXYZ
+from utils.rotationMatrix import rotationMatrix
+from utils.vlogR import vlogR
+from utils.GetF import GetF
+from utils.Getc import Getc
+from utils.GetJ import GetJ
+from utils.Getp import Getp
 
 def AXBYCZ(gA, gB, gC, RX_init, RY_init, RZ_init):
     N = gA.shape[2]
@@ -56,20 +63,24 @@ def AXBYCZ(gA, gB, gC, RX_init, RY_init, RZ_init):
 
 if __name__ == '__main__':
     # Load your gA, gB, gC, RX_init, RY_init, and RZ_init matrices here
-    A1_files = ["data/charuco_10x14/r1_tf.txt"]
-    B1_files = ["data/charuco_10x14/c2b_tf.txt"]
-    C1_files = ["data/charuco_10x14/r2_tf.txt"]
-    A2_files = ["data/charuco_10x14/r1_tf.txt"]
-    B2_files = ["data/charuco_10x14/c2b_tf.txt"]
-    C2_files = ["data/charuco_10x14/r2_tf.txt"]
+    A1_file = "data/charuco_10x14/r1_tf.txt"
+    B1_file = "data/charuco_10x14/c2b_tf.txt"
+    C1_file = "data/charuco_10x14/r2_tf.txt"
+    A2_file = "data/charuco_10x14/r1_tf.txt"
+    B2_file = "data/charuco_10x14/c2b_tf.txt"
+    C2_file = "data/charuco_10x14/r2_tf.txt"
 
-    gA = loadMatrices(A1_files)
-    gB = loadMatrices(B1_files)
-    gC = loadMatrices(C1_files)
+    gA = loadMatrices(A1_file)
+    gB = loadMatrices(B1_file)
+    gC = loadMatrices(C1_file)
 
-    RX_0 = gA[:3,:3,:]
-    RY_0 = gB[:3,:3,:]
-    RZ_0 = gC[:3,:3,:]
+    print("gA.shape:", gA.shape)
+
+    RX_0 = np.array([arr[:3, :3] for arr in gA])
+    RY_0 = np.array([arr[:3, :3] for arr in gB])
+    RZ_0 = np.array([arr[:3, :3] for arr in gC])
+
+    print("RX_0.ndim:", RX_0.ndim)
 
     RX_init, RY_init, RZ_init = findInitialXYZ(RX_0, RY_0, RZ_0)
 
